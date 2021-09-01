@@ -5,8 +5,10 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const port = process.env.PORT || 3000;
 //midlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json())
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 app.use(routes);
 //mongoose connect
 mongoose.connect(
