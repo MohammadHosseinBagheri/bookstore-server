@@ -13,11 +13,11 @@ const schema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    writer: { type: objectId, ref: "users", required: true },
+    writer: { type: String, required: true },
     picPath: { type: String },
     comments: [{ type: objectId, ref: "comment" }],
     commentsCount: { type: Number, required: true, default: 0 },
-    tags: [{ type: objectId, ref: "tag" }],
+    tags: [{ type: objectId, ref: "tag", required: true }],
   },
   {
     timestamps: {
