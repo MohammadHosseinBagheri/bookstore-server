@@ -23,7 +23,7 @@ router.post("/", loginAuthMiddleware(), (req, res) => {
       userModel.findOne({ phone }, (error, result) => {
         if (error) throw new Error("internal error");
         else if (!result) {
-          return res.status(404).json({ message: "user did not registr" });
+          return res.status(404).json({ message: "user did not register" });
         } else if (result) {
           const crackPassword = bcrypt.compareSync(password, result.password);
           if (crackPassword) {
