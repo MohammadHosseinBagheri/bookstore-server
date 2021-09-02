@@ -4,7 +4,7 @@ const tagFieldsValidation = () => {
   return [
     body("name").notEmpty().withMessage("name required"),
     body("tagType")
-      .matches(/iterest|category/)
+      .matches(/interest|category/)
       .withMessage("tag can one of interest or category"),
   ];
 };
