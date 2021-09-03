@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bookModel = require("../../../models/book");
-const tagModel = require("../../../models/tag");
 router.get("/", (req, res) => {
-  console.log(req.query["tag"]);
   try {
     bookModel
       .find({})
