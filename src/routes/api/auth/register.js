@@ -21,10 +21,12 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
       }
       return res.status(400).json({ errors: err });
     }
-    userModel.find({ email }, (error, result) => {
+    userModel.find({ email, phone }, (error, result) => {
       if (error) throw new Error(error);
       else if (result.length !== 0) {
-        return res.status(400).json({ message: "this user is not new" });
+        return res
+          .status(409)
+          .json({ message: "this email and phone is already registered" });
       } else {
         bcrypt.hash(password, saltRounds, function (err, hash) {
           new userModel({
