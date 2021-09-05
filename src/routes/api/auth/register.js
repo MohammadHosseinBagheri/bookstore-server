@@ -19,7 +19,7 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
       for (let error in errors.errors) {
         err.push(errors.errors[error].msg);
       }
-      return res.status(400).json({ errors: err });
+      return res.status(400).json({ message: err });
     }
     userModel.find({ email, phone }, (error, result) => {
       if (error) throw new Error(error);
