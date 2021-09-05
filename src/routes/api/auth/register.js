@@ -52,6 +52,7 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
             phone,
             email,
           }),
+          message: "successful",
         });
       }
     });
