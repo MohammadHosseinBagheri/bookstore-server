@@ -21,23 +21,21 @@ router.post("/", loginAuthMiddleware(), (req, res) => {
       return res.status(400).json({ errors: err });
     } else {
       userModel.findOne({ phone }, (error, result) => {
-        if (error) throw new Error("internal error");
+        if (error) throw new Error("مشکلی به وجود آموده است!");
         else if (!result) {
-          return res.status(404).json({ message: "user did not register" });
+          return res.status(404).json({ message: "این نام کاربری ثبت نام نکرده است!" });
         } else if (result) {
           const crackPassword = bcrypt.compareSync(password, result.password);
           if (crackPassword) {
             return res.status(200).json({
               refToken: generateRefreshToken({
                 name: result.name,
-                password: result.password,
                 phone: result.phone,
                 email: result.email,
                 lastName: result.lastName,
               }),
               accessToken: generateAccessToken({
                 name: result.name,
-                password: result.password,
                 phone: result.phone,
                 email: result.email,
                 lastName: result.lastName,
@@ -46,7 +44,7 @@ router.post("/", loginAuthMiddleware(), (req, res) => {
           } else {
             return res
               .status(401)
-              .json({ message: "user or password is not valid" });
+              .json({ message: "نام کاربری یا رمز عبور اشتباه است!" });
           }
         }
       });

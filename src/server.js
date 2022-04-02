@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 //midlewares
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
@@ -18,4 +18,4 @@ mongoose.connect(
     console.log("connected to MongoDB");
   }
 );
-app.listen(port, () => console.log("server is running"));
+app.listen(port, () => console.log(`server is running ${port}`));

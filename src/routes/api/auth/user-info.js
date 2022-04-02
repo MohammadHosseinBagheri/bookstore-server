@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/", userInfoTokenCheck, (req, res) => {
   try {
-    if (req.token) {
+    if (req.token && jwt.decode(req.token)) {
       const decode = jwt.verify(
         req.token,
         "0b0bdf2d0247c3cf49542927d8290cf5db5a3681d6e794ea14d6fd8db5e865e908ef09cb7da3582ecd312163cd778c75d5f482ae13d77854c20143cec75c9c0d"

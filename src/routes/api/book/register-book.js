@@ -5,7 +5,7 @@ const bookFieldsValidation = require("../../../middlewares/book/book-input-valid
 const bookModel = require("../../../models/book");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/uploads");
+    cb(null, "uploads");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -16,9 +16,12 @@ const upload = multer({ storage });
 const router = express.Router();
 router.post("/", upload.single("image"), bookFieldsValidation(), (req, res) => {
   const { name, description, writer, status, tags } = req.body;
+  const image = req.file;
   try {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    if (!image) {
+      return res.status(400).json({ errors: "عکسی انتخاب نشده است!" });
+    } else if (!errors.isEmpty()) {
       let err = [];
       for (let error in errors.errors) {
         err.push(errors.errors[error].msg);
@@ -33,9 +36,9 @@ router.post("/", upload.single("image"), bookFieldsValidation(), (req, res) => {
       picPath: `/upload/${req.file.originalname}`,
       tags,
     }).save();
-    return res.status(201).json({ message: "created" });
+    return res.status(201).json({ message: "باموفقیت انجام شد!" });
   } catch (e) {
-    return res.status(500).json({ message: "internal error" });
+    return res.status(500).json({ message: "مشکلی پیش آمده است!" });
   }
 });
 module.exports = router;

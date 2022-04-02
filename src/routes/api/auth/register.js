@@ -41,14 +41,12 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
           refToken: generateRefreshToken({
             name,
             lastName,
-            password,
             phone,
             email,
           }),
           accessToken: generateAccessToken({
             name,
             lastName,
-            password,
             phone,
             email,
           }),
