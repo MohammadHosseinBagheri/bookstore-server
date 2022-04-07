@@ -15,7 +15,7 @@ const upload = multer({ storage });
 
 const router = express.Router();
 router.post("/", upload.single("image"), bookFieldsValidation(), (req, res) => {
-  const { name, description, writer, status, tags } = req.body;
+  const { name, description, writer, status, tags, price, content } = req.body;
   const image = req.file;
   try {
     const errors = validationResult(req);
@@ -33,6 +33,8 @@ router.post("/", upload.single("image"), bookFieldsValidation(), (req, res) => {
       description,
       writer,
       status,
+      price,
+      content,
       picPath: `/upload/${req.file.originalname}`,
       tags,
     }).save();

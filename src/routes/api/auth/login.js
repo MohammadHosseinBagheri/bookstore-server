@@ -33,12 +33,14 @@ router.post("/", loginAuthMiddleware(), (req, res) => {
                 phone: result.phone,
                 email: result.email,
                 lastName: result.lastName,
+                role:result.role
               }),
               accessToken: generateAccessToken({
                 name: result.name,
                 phone: result.phone,
                 email: result.email,
                 lastName: result.lastName,
+                role:result.role
               }),
             });
           } else {

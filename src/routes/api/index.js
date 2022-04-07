@@ -6,6 +6,8 @@ const userInfo = require("./auth/user-info");
 const registerBook = require("./book/register-book");
 const registerTag = require("./book/register-tag");
 const getBook = require("./book/get-book");
+const removeBook = require("./book/remove-book");
+const editBook = require("./book/edit-book");
 //auth
 router.use("/auth/register", register);
 router.use("/auth/login", login);
@@ -13,6 +15,8 @@ router.use("/auth/user/info", userInfo);
 //book
 router.use("/book/register", registerBook);
 router.use("/book/get", getBook);
+router.use("/book", removeBook);
+router.use("/book", editBook);
 //tag
 router.use("/tag/register", registerTag);
 module.exports = router;
