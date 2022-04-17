@@ -8,7 +8,12 @@ const registerTag = require("./book/register-tag");
 const getBook = require("./book/get-book");
 const removeBook = require("./book/remove-book");
 const editBook = require("./book/edit-book");
+const users = require("./users/users");
+const userBookDetail=require("./auth/user-book-detail")
+//users
+router.use("/users", users);
 //auth
+router.use("/auth/user-book-detail", userBookDetail);
 router.use("/auth/register", register);
 router.use("/auth/login", login);
 router.use("/auth/user/info", userInfo);

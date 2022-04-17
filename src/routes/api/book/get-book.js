@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const bookModel = require("../../../models/book");
+const userModel = require("../../../models/user");
 const tagModel = require("../../../models/tag");
 const jwt = require("jsonwebtoken");
 const checkAuth = require("../../../middlewares/auth/check-authorization");
+const userBookDetailModel = require("../../../models/user-book-detail");
 
 router.get("/", (req, res) => {
   try {
@@ -66,11 +68,22 @@ router.get(
         .catch((e) => {
           throw e;
         });
-      let tags = await tagModel.find({}, "name").exec();
 
       if (req.headers["authorization"]) {
+        let tags = await tagModel.find({}, "name").exec();
+        const { _id: userId } = await userModel
+          .findOne({ phone: req.decode.phone || req.decode.phone })
+          .select("_id")
+          .exec();
+          const bookDetail = await userBookDetailModel
+          .findOne({
+            bookId: id,
+            userId: String(userId),
+          })
+          .select("isFavorite isBought percent")
+          .exec();
         return res.status(200).json({
-          data: { tags, book },
+          data: { tags, book, bookDetail },
         });
       } else {
         return res.status(200).json({

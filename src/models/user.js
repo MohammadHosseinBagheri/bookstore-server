@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const objectId = mongoose.Schema.Types.ObjectId;
 const schema = mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -6,12 +7,18 @@ const schema = mongoose.Schema(
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true, unique: true },
+    avatar: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/sirgray/image/upload/v1649421249/users/user_doqern.png",
+    },
     role: {
-      type: Number,
+      type: String,
       required: true,
-      default: 1,
+      default: "user",
       enum: ["admin", "user"],
     },
+    userBookDetail: { ref: "userBookDetail", type: objectId },
   },
   { timestamps: { createdAt: "created_at" } }
 );

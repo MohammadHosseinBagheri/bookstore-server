@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const checkAuth = (req, res, next) => {
+const checkAuth = (req, res, next, adminCheck = false) => {
   try {
     const headers = req.headers["authorization"];
     if (headers) {
@@ -10,8 +10,21 @@ const checkAuth = (req, res, next) => {
           token,
           "0b0bdf2d0247c3cf49542927d8290cf5db5a3681d6e794ea14d6fd8db5e865e908ef09cb7da3582ecd312163cd778c75d5f482ae13d77854c20143cec75c9c0d"
         );
-        if (decode) next();
-        else {
+        if (decode) {
+          req.decode = decode;
+          if (adminCheck) {
+            if (decode.role === "admin") {
+              req.adminInfo = decode;
+              next();
+            } else {
+              return res
+                .status(403)
+                .json({ message: "شما به این صفحه دسترسی ندارید!" });
+            }
+          } else {
+            next();
+          }
+        } else {
           throw "unauthorize";
         }
       } else {

@@ -35,7 +35,7 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
             password: hash,
             phone,
             email,
-            role: 1,
+            role:'user'
           }).save();
         });
         return res.status(201).json({
@@ -44,14 +44,14 @@ router.post("/", registerAuthMiddleware(), (req, res) => {
             lastName,
             phone,
             email,
-            role: 1,
+            role:'user'
           }),
           accessToken: generateAccessToken({
             name,
             lastName,
             phone,
             email,
-            role: 1,
+            role:'user'
           }),
           message: "successful",
         });
