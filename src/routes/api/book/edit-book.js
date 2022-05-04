@@ -36,7 +36,6 @@ router.put(
           }
         );
       }
-      console.log(JSON.parse(JSON.stringify(req.body)));
       const picPath = (await path?.secure_url) || req.body.picPath;
       const book = await bookModel
         .findOneAndUpdate(

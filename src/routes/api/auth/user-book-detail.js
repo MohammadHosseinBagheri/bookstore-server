@@ -15,14 +15,15 @@ router.put(
     try {
       const { bookId } = req.params;
       const { _id: userId } = await userModel
-        .findOne({ phone: req.decode.phone })
-        .select("_id")
-        .exec();
-        if (!objectId.isValid(bookId)) {
-            return res
-          .status(400)
-          .json({ message: "پارامتر های ای دی اشتباه است!" });
+      .findOne({ phone: req.decode.phone })
+      .select("_id")
+      .exec();
+      if (!objectId.isValid(bookId)) {
+        return res
+        .status(400)
+        .json({ message: "پارامتر های ای دی اشتباه است!" });
       }
+      console.log("render",req.body);
       const bookDetail = await userBookDetail
         .findOneAndUpdate(
           {
@@ -33,7 +34,6 @@ router.put(
           { upsert: true, new: true, setDefaultsOnInsert: true }
         )
         .exec();
-        console.log(bookDetail);
       return res.status(200).json({ message: "باموفقیت انجام شد!" });
     } catch (e) {
       return res.status(500).json({ message: e });

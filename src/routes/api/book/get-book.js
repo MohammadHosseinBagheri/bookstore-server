@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const checkAuth = require("../../../middlewares/auth/check-authorization");
 const userBookDetailModel = require("../../../models/user-book-detail");
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const headers = req.headers["authorization"];
     if (headers) {
@@ -19,15 +19,33 @@ router.get("/", (req, res) => {
           "0b0bdf2d0247c3cf49542927d8290cf5db5a3681d6e794ea14d6fd8db5e865e908ef09cb7da3582ecd312163cd778c75d5f482ae13d77854c20143cec75c9c0d"
         );
         if (decode) {
-          bookModel
-            .find({})
-            .populate("tags")
-            .exec((error, result) => {
-              if (error) throw error;
-              else {
-                return res.status(200).json({ data: result });
-              }
+          if (decode?.role !== "admin") {
+            bookModel
+              .find({})
+              .populate("tags")
+              .exec((error, result) => {
+                if (error) throw error;
+                else {
+                  return res.status(200).json({
+                    data: result
+                  });
+                }
+              });
+          } else {
+            console.log("render");
+            const result = await bookModel
+              .find({}).where("status").ne(false)
+              .populate("tags")
+              .exec();
+            const recentlyReadedBook = await userBookDetailModel.find({
+              phone: decode?.phone
+            }).populate("bookId").exec()
+            return res.status(200).json({
+              data: result,
+              recentlyReadedBook
             });
+
+          }
         } else {
           throw "unauthorize";
         }
@@ -41,12 +59,16 @@ router.get("/", (req, res) => {
         .exec((error, result) => {
           if (error) throw error;
           else {
-            return res.status(200).json({ data: result });
+            return res.status(200).json({
+              data: result
+            });
           }
         });
     }
   } catch (e) {
-    return res.status(500).json({ message: e });
+    return res.status(500).json({
+      message: e
+    });
   }
 });
 
@@ -56,8 +78,11 @@ router.get(
     req.headers["authorization"] ? checkAuth(req, res, next) : next();
   },
   async (req, res) => {
+    console.log("red");
     try {
-      const { id } = req.params;
+      const {
+        id
+      } = req.params;
       let book = await bookModel
         .findById(id)
         .populate("tags")
@@ -71,11 +96,15 @@ router.get(
 
       if (req.headers["authorization"]) {
         let tags = await tagModel.find({}, "name").exec();
-        const { _id: userId } = await userModel
-          .findOne({ phone: req.decode.phone || req.decode.phone })
+        const {
+          _id: userId
+        } = await userModel
+          .findOne({
+            phone: req.decode.phone || req.decode.phone
+          })
           .select("_id")
           .exec();
-          const bookDetail = await userBookDetailModel
+        const bookDetail = await userBookDetailModel
           .findOne({
             bookId: id,
             userId: String(userId),
@@ -83,15 +112,23 @@ router.get(
           .select("isFavorite isBought percent")
           .exec();
         return res.status(200).json({
-          data: { tags, book, bookDetail },
+          data: {
+            tags,
+            book,
+            bookDetail
+          },
         });
       } else {
         return res.status(200).json({
-          data: { book },
+          data: {
+            book
+          },
         });
       }
     } catch (e) {
-      return res.status(500).json({ message: e });
+      return res.status(500).json({
+        message: e
+      });
     }
   }
 );
