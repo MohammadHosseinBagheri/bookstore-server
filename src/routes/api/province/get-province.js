@@ -5,7 +5,7 @@ const cities = require('../../../constants/cities')
 
 router.get(
     '/',
-    (req, res, next) => checkAuth(req, res, next, true),
+    (req, res, next) => checkAuth(req, res, next, false),
     (req, res) => {
         try {
             const { province } = req.query

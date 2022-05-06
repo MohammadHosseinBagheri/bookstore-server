@@ -5,7 +5,7 @@ const universityModel = require('../../../models/university')
 
 router.get(
     '/',
-    (req, res, next) => checkAuth(req, res, next, true),
+    (req, res, next) => checkAuth(req, res, next, false),
     async (req, res) => {
         try {
             const universities = await universityModel.find({}).exec()

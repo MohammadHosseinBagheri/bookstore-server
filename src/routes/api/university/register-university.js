@@ -5,7 +5,7 @@ const universityModel = require('../../../models/university')
 const cities = require('../../../constants/cities')
 router.post(
     '/',
-    (req, res, next) => checkAuth(req, res, next, true),
+    (req, res, next) => checkAuth(req, res, next, false),
     async (req, res) => {
         try {
             const { name, province, city, fields } = req.body
