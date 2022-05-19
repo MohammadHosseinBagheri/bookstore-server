@@ -1,20 +1,21 @@
 const mongoose = require('mongoose')
-const objectId = mongoose.Schema.Types.ObjectId
 const Schema = mongoose.Schema(
     {
         name: {
             type: String,
             required: true,
+            unique: false,
         },
         province: {
             type: String,
             required: true,
+            unique: false,
         },
         city: {
             type: String,
             required: true,
+            unique: false,
         },
-        fields: [{ type: objectId, required: false, ref: 'field' }],
     },
     {
         timestamps: {

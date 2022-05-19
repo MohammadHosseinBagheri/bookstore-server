@@ -8,7 +8,7 @@ router.post(
     (req, res, next) => checkAuth(req, res, next, false),
     async (req, res) => {
         try {
-            const { name, province, city, fields } = req.body
+            const { name, province, city } = req.body
             const isExist = await universityModel
                 .findOne({ name, province, city })
                 .exec()
@@ -32,7 +32,6 @@ router.post(
                     name,
                     province: findedProvince.id,
                     city: findedCity.id,
-                    fields,
                 }).save()
                 return res.status(201).json({
                     message: 'دانشگاه با موفقیت ثبت شد!',
