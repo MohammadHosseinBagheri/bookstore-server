@@ -17,6 +17,8 @@ const registerField = require('./field/register-field')
 const getFields = require('./field/get-fields')
 const registerCollege = require('./college/register-college')
 const getColleges = require('./college/get-colleges')
+const registerDoc = require('./documents/register-document')
+const getDocs = require('./documents/get-document')
 
 //users
 router.use('/users', users)
@@ -43,5 +45,7 @@ router.use('/field', getFields)
 //college
 router.use('/college', registerCollege)
 router.use('/college', getColleges)
-
+//documents
+router.use('/document', registerDoc)
+router.use('/document', getDocs)
 module.exports = router
