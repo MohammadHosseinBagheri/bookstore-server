@@ -27,7 +27,12 @@ router.get(
                 }
                 const collegesDocs = await docModel
                     .find({ college: collegeId })
-                    .populate('field')
+                    .populate({
+                        path: 'field',
+                        populate: {
+                            path: 'university',
+                        },
+                    })
                     .populate('college')
                     .exec()
                 return res.status(200).json({ data: collegesDocs })
