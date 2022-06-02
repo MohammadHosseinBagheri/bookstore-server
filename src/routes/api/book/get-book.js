@@ -32,7 +32,6 @@ router.get("/", async (req, res) => {
                 }
               });
           } else {
-            console.log("render");
             const result = await bookModel
               .find({}).where("status").ne(false)
               .populate("tags")
@@ -78,7 +77,6 @@ router.get(
     req.headers["authorization"] ? checkAuth(req, res, next) : next();
   },
   async (req, res) => {
-    console.log("red");
     try {
       const {
         id

@@ -23,10 +23,8 @@ router.post(
     (req, res, next) => checkAuth(req, res, next, false),
     async (req, res) => {
         try {
-            console.log(req.file)
             if (req.file) {
                 const { name, author, field, college } = req.body
-
                 path = await cloudinary.uploader.upload(
                     req?.file?.path,
                     { folder: college },
@@ -42,7 +40,6 @@ router.post(
                     field,
                     college,
                 })
-                console.log(newDocument?._id.toString())
                 await newDocument.save()
                 await collegeModel.findByIdAndUpdate(
                     college,

@@ -4,7 +4,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 router.post("/", userInfoTokenCheck, (req, res) => {
-  console.log(req);
   try {
     if (req.token && jwt.decode(req.token)) {
       const decode = jwt.verify(

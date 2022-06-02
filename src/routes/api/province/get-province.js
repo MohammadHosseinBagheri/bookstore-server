@@ -20,7 +20,6 @@ router.get(
                 return res.status(200).json({ data: allProvince })
             }
         } catch (e) {
-            console.log(typeof e)
             return res.status(500).json({ message: e })
         }
     }

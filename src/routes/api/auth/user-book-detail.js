@@ -23,7 +23,6 @@ router.put(
         .status(400)
         .json({ message: "پارامتر های ای دی اشتباه است!" });
       }
-      console.log("render",req.body);
       const bookDetail = await userBookDetail
         .findOneAndUpdate(
           {
