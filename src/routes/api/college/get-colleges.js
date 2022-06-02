@@ -32,7 +32,7 @@ router.get(
                 .exec()
             return res.status(200).json({ data: colleges })
         } catch (e) {
-            // console.log(e)
+            console.log(e)
             return res.status(500).json({ message: e })
         }
     }
