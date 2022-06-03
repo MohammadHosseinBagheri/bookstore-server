@@ -27,7 +27,7 @@ router.post('/', registerAuthMiddleware(), (req, res) => {
                 return res
                     .status(409)
                     .json({
-                        message: 'this email and phone is already registered',
+                        message: 'این شماره و ایمل قبلا ثبت نام شده است!',
                     })
             } else {
                 bcrypt.hash(password, saltRounds, function (err, hash) {
